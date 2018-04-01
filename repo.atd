@@ -1,0 +1,4 @@
+type repo = {
+     id : int;
+     name : string;
+}
