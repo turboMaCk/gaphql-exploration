@@ -1,8 +1,15 @@
 (jbuild_version 1)
 
 (executable
- ((libraries (cohttp-lwt-unix cohttp.lwt graphql-lwt yojson))
-  (name main)))
+ ((libraries
+   (cohttp-lwt-unix
+    cohttp.lwt
+    graphql-lwt
+    yojson
+    tls
+    core
+    atdgen))
+  (name labels)))
 
 (alias
  ((name DEFAULT)
