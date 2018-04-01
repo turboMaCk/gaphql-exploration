@@ -7,3 +7,5 @@ $ opam install jbuilder cohttp-lwt-unix cohttp graphql-lwt yojson
 $ jbuilder build main.exe
 $ ./build/default/main.exe
 ```
+
+open http://localhost:8080/graphql in browser.
