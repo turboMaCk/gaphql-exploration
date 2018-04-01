@@ -14,15 +14,7 @@ let body =
     (fun (resp, body) ->
       let code = resp |> Response.status |> Code.code_of_status in
       let headers = resp |> Response.headers |> Header.to_string in
-      Printf.printf "Response code: %d\n" code;
-      Printf.printf "Headers: %s\n" headers;
       Cohttp_lwt.Body.to_string body >|=
         (fun body ->
-          let repo = Repo_j.repo_of_string body in
-          Printf.printf "Repo is here: %s\n" (Repo_j.string_of_repo repo);
-          body
+          Repo_j.repo_of_string body
     ))
-
-let () =
-  Lwt_main.run body;
-  exit 1;

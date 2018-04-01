@@ -15,7 +15,7 @@ type user = {
 let rec alice = { id = 1; name = "Alice"; role = Admin; friends = [bob]   }
     and bob   = { id = 2; name = "Bob";   role = User;  friends = [alice] }
 
-let users = [alice; bob]
+let users = [ alice; bob ]
 
 let role = Schema.(enum "role"
   ~values:[
@@ -27,24 +27,39 @@ let role = Schema.(enum "role"
 let user = Schema.(obj "user"
   ~fields:(fun user -> [
     field "id"
-      ~args: Arg.[]
-      ~typ: (non_null int)
-      ~resolve: (fun () p -> p.id);
-
+      ~args:Arg.[]
+      ~typ:(non_null int)
+      ~resolve:(fun () p -> p.id)
+    ;
     field "name"
-      ~args: Arg.[]
-      ~typ: (non_null string)
-      ~resolve: (fun () p -> p.name);
-
+      ~args:Arg.[]
+      ~typ:(non_null string)
+      ~resolve:(fun () p -> p.name)
+    ;
     field "role"
-      ~args: Arg.[]
-      ~typ: (non_null role)
-      ~resolve: (fun () p -> p.role);
-
+      ~args:Arg.[]
+      ~typ:(non_null role)
+      ~resolve:(fun () p -> p.role)
+    ;
     field "friends"
       ~args: Arg.[]
       ~typ: (list (non_null user))
-      ~resolve: (fun () p -> Some p.friends)
+      ~resolve:(fun () p -> Some p.friends);
+  ])
+)
+
+type repo = Repo_t.repo = { id: int; name: string }
+
+let repo = Schema.(obj "repo"
+  ~fields:(fun _ -> [
+    field "id"
+      ~args: Arg.[]
+      ~typ:(non_null int)
+      ~resolve: (fun () r -> r.id);
+    field "name"
+      ~args: Arg.[]
+      ~typ:(non_null string)
+      ~resolve: (fun () r -> r.name);
   ])
 )
 
@@ -54,6 +69,11 @@ let schema =
       ~args:Arg.[]
       ~typ:(non_null (list (non_null user)))
       ~resolve:(fun () () -> Lwt.return users);
+
+    field "repo"
+      ~args:Arg.[]
+      ~typ:(non_null repo)
+      ~resolve:(fun () () -> Lwt_main.run Labels.body);
 
     field "greeter"
       ~typ: string
@@ -66,6 +86,7 @@ let schema =
       ~resolve:(fun () () (greeting, name) ->
         Some (Format.sprintf "%s, %s" greeting name)
       );
+
   ])
 
 let () =
