@@ -73,7 +73,7 @@ let schema =
     field "repo"
       ~args:Arg.[]
       ~typ:(non_null repo)
-      ~resolve:(fun () () -> Lwt_main.run Labels.body);
+      ~resolve:(fun () () -> Lwt_main.run Github.getRepo);
 
     field "greeter"
       ~typ: string
