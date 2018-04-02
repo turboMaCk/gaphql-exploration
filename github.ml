@@ -12,9 +12,7 @@ let get_repo =
   in
   request >>=
     (fun (resp, body) ->
-      let code = resp |> Response.status |> Code.code_of_status in
-      let headers = resp |> Response.headers |> Header.to_string in
       Cohttp_lwt.Body.to_string body >|=
-        (fun body ->
-          Repo_j.repo_of_string body
+        (fun b ->
+          Repo_j.repo_of_string b
     ))
