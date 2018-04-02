@@ -3,7 +3,7 @@ open Lwt
 open Cohttp
 open Cohttp_lwt_unix
 
-let getRepo =
+let get_repo =
   let headers =
     Cohttp.Header.init_with "User-Agent" "cohttp"
   in
